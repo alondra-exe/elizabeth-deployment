@@ -1,4 +1,4 @@
-name: Develop Test Code
+name: QA Test Code
 on:
   pull_request:
   push:
@@ -21,4 +21,4 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           HEAD_BRANCH: develop
-          BASE_BRANCH: master
+          BASE_BRANCH: main
