@@ -1,10 +1,10 @@
 #!/usr/bin/env sh
 . "$(dirname -- "$0")/_/husky.sh"
 
-BRANCH="$(git rev-parse --abbrev-ref HEAD)"
-PROTECTED_BRANCHES="^(main)"
+branch="$(git rev-parse --abbrev-ref HEAD)"
+protected_branch="^(main)"
 
-if [[ "$BRANCH" =~ $PROTECTED_BRANCHES ]]; then
+if [[ "$branch" =~ $protected_branch ]]; then
   echo -e "Can't push to remote $BRANCH branch, please create your own branch and use PR." && exit 1
 fi
 echo -e ">> Finish checking branch name"

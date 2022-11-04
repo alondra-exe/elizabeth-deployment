@@ -2,8 +2,6 @@ name: Test Code
 on:
   pull_request:
   push:
-    branches:
-      - develop/*
 jobs:
   test-code:
     runs-on: ubuntu-latest
@@ -18,3 +16,9 @@ jobs:
         run: npm run lint
       - name: Test coverage
         run: npm run test
+- name: Create PR
+        uses: medlypharmacy/create-pr-action@main
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          HEAD_BRANCH: develop
+          BASE_BRANCH: main

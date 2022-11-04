@@ -1,9 +1,9 @@
 #!/usr/bin/env sh
 . "$(dirname -- "$0")/_/husky.sh"
 
-branchName="$(git rev-parse --abbrev-ref HEAD)"
+branch="$(git rev-parse --abbrev-ref HEAD)"
 
-if [ $branchName == "main" ]; then
+if [ $branch == "main" ]; then
   echo "You can't commit directly to main branch" && exit 1
 fi
 echo -e ">> Finish checking branch name"
