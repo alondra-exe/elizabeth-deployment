@@ -2,12 +2,12 @@
 . "$(dirname -- "$0")/_/husky.sh"
 
 BRANCH="$(git rev-parse --abbrev-ref HEAD)"
-PROTECTED_BRANCHES="^(master|main)"
+PROTECTED_BRANCHES="^(main)"
 
 if [[ "$BRANCH" =~ $PROTECTED_BRANCHES ]]
 then
   echo -e "Can't push to remote $BRANCH branch, please create your own branch and use PR."
-  exit 1
+  && exit 1
 fi
 
 exit 0
