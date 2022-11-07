@@ -42,7 +42,7 @@ jobs:
         run: npm install
       - name: Run test
         run: npm run test
-      - name: Set Homepage
+      - name: set homepage
         run: npm run setHomepage
       - name: Build
         run: CI = false npm run build
