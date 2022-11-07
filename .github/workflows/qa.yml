@@ -1,9 +1,14 @@
-name: QA Test Code
+name: Deploy QA env
 on:
   pull_request:
   push:
+    branches-ignore:
+      - main
+  workflow_dispatch:
+env:
+  CI: false
 jobs:
-  test-code:
+  validate-dev-changes:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -16,10 +21,40 @@ jobs:
         run: npm run lint
       - name: Test coverage
         run: npm run test
-      - name: get branch name
-       id: get-branch
-       uses: ypicard/get-branch-name-github-action@v1
+  QA-deploy:
+    needs: validate-dev-changes
+    environment:
+      name: QA
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: "16"
+      - name: Install Dependencies
+        run: npm install
+      - name: Run test
+        run: npm run test
+      - name: Set Homepage
+        run: npm run setHomepage
+      - name: Build
+        run: CI = false npm run build
+      - name: deploy to QA env > Netlify
+        run: netlify deploy --prod --auth ${{ secrets.NETLIFY_TOKEN }} --site ${{ secrets.SITE_ID }}
+
+  PR-automated:
+    needs: QA-deploy
+    runs-on: ubuntu-latest
+    permissions: write-all
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: "16"
+      - name: get branch
+        id: get-branch
+        uses: ypicard/get-branch-name-github-action@v1
       - name: pull-request
-       run: gh pr create --base main --head ${{ steps.get-branch.outputs.branch }} --title "Pulling ${{ steps.get-branch.outputs.branch }} into"
-       env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: gh pr create --base main --head ${{ steps.get-branch.outputs.branch }} --title "Pulling ${{ steps.get-branch.outputs.branch }} into main" --body "Automated PR"
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
