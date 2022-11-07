@@ -16,6 +16,9 @@ jobs:
         run: npm run lint
       - name: Test coverage
         run: npm run test
+      - name: get branch name
+       id: get-branch
+       uses: ypicard/get-branch-name-github-action@v1
       - name: pull-request
        run: gh pr create --base main --head ${{ steps.get-branch.outputs.branch }} --title "Pulling ${{ steps.get-branch.outputs.branch }} into"
        env:
