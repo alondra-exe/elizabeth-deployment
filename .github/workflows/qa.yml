@@ -43,7 +43,7 @@ jobs:
       - name: Run test
         run: npm run test
       - name: set homepage
-        run: npm run setHomepage
+        run: npm run setHomePage
       - name: Build
         run: CI = false npm run build
       - name: deploy to QA env > Netlify
