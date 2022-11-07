@@ -21,7 +21,7 @@ jobs:
       - name: Install Dependencies
         run: npm install
       - name: Build
-        run: CI = false npm run build
+        run: CI=false npm run build
       - name: Run test
         run: npm run test
       - name: upload page artifact
