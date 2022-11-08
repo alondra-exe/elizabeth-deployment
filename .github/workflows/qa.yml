@@ -46,8 +46,8 @@ jobs:
         run: npm run setHomePage
       - name: Build
         run: CI=false npm run build
-      - name: deploy to QA env > Netlify
-        run: netlify deploy -p --auth ${{ secrets.NETLIFY_TOKEN }} --site ${{ secrets.SITE_ID }}
+      - name: deploy
+        run: netlify deploy --prod --auth ${{ secrets.NETLIFY_TOKEN }} --site ${{ secrets.SITE_ID }}
   PR-automated:
     needs: QA-deploy
     runs-on: ubuntu-latest
