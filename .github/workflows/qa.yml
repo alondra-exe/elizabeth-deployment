@@ -47,7 +47,7 @@ jobs:
       - name: Build
         run: CI=false npm run build
       - name: deploy
-        run: netlify deploy -prod --auth ${{ secrets.NETLIFY_TOKEN }} --site ${{ secrets.SITE_ID }}
+        run: netlify deploy --prod --auth ${{ secrets.NETLIFY_TOKEN }} --site ${{ secrets.SITE_ID }}
   PR-automated:
     needs: QA-deploy
     runs-on: ubuntu-latest
