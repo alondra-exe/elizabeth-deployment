@@ -1,9 +1,8 @@
-name: Test Code
+name: Develop Test Code
 on:
   pull_request:
-  push:
-    branches:
-      - develop/*
+    push:
+      branches: -develop/*
 jobs:
   test-code:
     runs-on: ubuntu-latest

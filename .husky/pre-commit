@@ -1,5 +1,14 @@
 #!/usr/bin/env sh
 . "$(dirname -- "$0")/_/husky.sh"
 
+branch="$(git rev-parse --abbrev-ref HEAD)"
+
+if [ $branch == "main" ]; then
+  echo "You can't commit directly to main branch" && exit 1
+fi
+echo -e ">> Finish checking branch name"
+
 npm run lint
 npm run test
+
+exit 0
